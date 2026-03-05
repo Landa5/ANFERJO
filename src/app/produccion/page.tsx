@@ -1,6 +1,8 @@
 import KioskPanel from '@/components/produccion/kiosk-panel'
 import { getKioskData } from '@/actions/kiosk'
 
+export const dynamic = 'force-dynamic'
+
 export default async function ProduccionPage() {
     const { users, references } = await getKioskData()
 

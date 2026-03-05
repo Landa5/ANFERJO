@@ -22,11 +22,32 @@ async function createAdmin() {
 
     console.log("Creating/Updating Admin user:", email);
 
-    const { data: { users }, error: listError } = await supabaseAdmin.auth.admin.listUsers();
-    let existingUser = users.find(u => u.email === email);
+    let hasMore = true;
+    let page = 1;
+    let existingUser = null;
+
+    while (hasMore) {
+        const { data: { users }, error: listError } = await supabaseAdmin.auth.admin.listUsers({
+            page: page,
+            perPage: 1000
+        });
+
+        if (listError || users.length === 0) {
+            hasMore = false;
+            break;
+        }
+
+        const found = users.find(u => u.email === email);
+        if (found) {
+            existingUser = found;
+            break;
+        }
+
+        page++;
+    }
 
     if (existingUser) {
-        await supabaseAdmin.auth.admin.updateUserById(existingUser.id, { password });
+        await supabaseAdmin.auth.admin.updateUserById(existingUser.id, { password: password });
         console.log("Existing auth user updated.");
     } else {
         const { data, error } = await supabaseAdmin.auth.admin.createUser({
