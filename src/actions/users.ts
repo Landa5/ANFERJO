@@ -79,6 +79,24 @@ export async function createUser(data: UserData) {
     }
 }
 
+export async function bulkCreateUsers(users: UserData[]) {
+    const results = {
+        successCount: 0,
+        errors: [] as string[]
+    }
+
+    for (const user of users) {
+        const res = await createUser(user)
+        if (res.success) {
+            results.successCount++
+        } else {
+            results.errors.push(`Error con ${user.email}: ${res.error}`)
+        }
+    }
+
+    return results
+}
+
 export async function getUsers() {
     const supabase = await createClient()
     const { data, error } = await supabase

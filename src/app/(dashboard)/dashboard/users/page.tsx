@@ -35,6 +35,7 @@ import { Button } from '@/components/ui/button'
 import { UserCog } from 'lucide-react'
 import { CreateUserDialog } from '@/components/users/create-user-dialog'
 import { EditUserDialog } from '@/components/users/edit-user-dialog'
+import { ImportUsersDialog } from '@/components/users/import-users-dialog'
 
 const ROLE_LABELS: Record<string, string> = {
     admin: 'Administrador',
@@ -67,7 +68,10 @@ export default async function UsersPage() {
                     <h1 className="text-3xl font-bold tracking-tight">Empleados</h1>
                     <p className="text-muted-foreground">Gestión de personal y roles.</p>
                 </div>
-                <CreateUserDialog />
+                <div className="flex items-center gap-2">
+                    <ImportUsersDialog />
+                    <CreateUserDialog />
+                </div>
             </div>
 
             <div className="border rounded-md">

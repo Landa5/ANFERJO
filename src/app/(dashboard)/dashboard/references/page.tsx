@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Plus, Edit, Trash2 } from 'lucide-react'
 import ReferenceDialog from '@/components/references/reference-dialog'
+import { ImportReferencesDialog } from '@/components/references/import-references-dialog'
 
 export default async function ReferencesPage() {
     const references = await getReferences()
@@ -22,7 +23,10 @@ export default async function ReferencesPage() {
                     <h1 className="text-3xl font-bold tracking-tight">Referencias (SKUs)</h1>
                     <p className="text-muted-foreground">Catálogo de productos y semielaborados.</p>
                 </div>
-                <ReferenceDialog mode="create" />
+                <div className="flex items-center gap-2">
+                    <ImportReferencesDialog />
+                    <ReferenceDialog mode="create" />
+                </div>
             </div>
 
             <div className="border rounded-md bg-white">
